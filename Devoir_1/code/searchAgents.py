@@ -294,7 +294,7 @@ class CornersProblem(search.SearchProblem):
         '''
             INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
         '''
-
+        self.startingState = startingGameState
 
     def getStartState(self):
         """
@@ -306,7 +306,8 @@ class CornersProblem(search.SearchProblem):
             INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
         '''
         
-        util.raiseNotDefined()
+        EtatDebut = (self.startingPosition, [])
+        return EtatDebut
 
     def isGoalState(self, state):
         """
@@ -317,7 +318,16 @@ class CornersProblem(search.SearchProblem):
             INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
         '''
 
-        util.raiseNotDefined()
+        noeud = state[0]
+        CoinsVisites = state[1]
+        
+        if noeud in self.corners:
+            if noeud not in CoinsVisites:
+                CoinsVisites.append(noeud)
+            return len(CoinsVisites) == 4
+        else:
+            return False 
+        
 
     def getSuccessors(self, state):
         """
@@ -342,6 +352,20 @@ class CornersProblem(search.SearchProblem):
             '''
                 INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
             '''
+
+            x,y = state[0]
+            dx, dy = Actions.directionToVector(action)
+            xsuivant, ysuivant = int(x + dx), int(y + dy)
+            murs = self.walls[xsuivant][ysuivant]
+            CoinsVisites = state[1]
+            
+            if not murs:
+                noeudsuivant = (xsuivant, ysuivant)
+                SuccesseurCoinsVisites = list(CoinsVisites)
+                if noeudsuivant in self.corners:
+                    if not noeudsuivant in SuccesseurCoinsVisites:
+                        SuccesseurCoinsVisites.append(noeudsuivant)
+                successors.append(((noeudsuivant, SuccesseurCoinsVisites), action, 1))
 
 
         self._expanded += 1 # DO NOT CHANGE
