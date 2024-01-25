@@ -100,7 +100,20 @@ def depthFirstSearch(problem:SearchProblem)->List[Direction]:
         INSÉREZ VOTRE SOLUTION À LA QUESTION 1 ICI
     '''
 
-    util.raiseNotDefined()
+    actuels = (problem.getStartState(), [], [])
+    fermes = []
+    fringe = util.Stack() #last-in-first-out (LIFO): dernier arrivé, premier sorti
+    fringe.push(actuels)  #actualisation de la fringe
+    
+    
+    while fringe.isEmpty() is False:
+        noeud, chemin, total = fringe.pop()
+        if problem.isGoalState(noeud):
+            return chemin
+        if noeud not in fermes:
+            fermes.append(noeud)
+            for coord, mouvement, cout in problem.getSuccessors(noeud):
+                fringe.push((coord, chemin + [mouvement], total + [cout])) 
 
 
 def breadthFirstSearch(problem:SearchProblem)->List[Direction]:
@@ -110,8 +123,23 @@ def breadthFirstSearch(problem:SearchProblem)->List[Direction]:
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 2 ICI
     '''
+    
+    actuels = (problem.getStartState(), [])
+    fermes = []
+    fringe = util.Queue() #first-in-first-out (FIFO): premier arrivé, premier sorti
+    fringe.push(actuels)  #actualisation de la fringe
+    
+    
+    while fringe.isEmpty() is False:
+        noeud, chemin = fringe.pop()
+        if problem.isGoalState(noeud):
+            return chemin
+        if noeud not in fermes:
+            fermes.append(noeud)
+            for coord, mouvement, _ in problem.getSuccessors(noeud):
+                fringe.push((coord, chemin + [mouvement]))
 
-    util.raiseNotDefined()
+    
 
 def uniformCostSearch(problem:SearchProblem)->List[Direction]:
     """Search the node of least total cost first."""
@@ -121,7 +149,22 @@ def uniformCostSearch(problem:SearchProblem)->List[Direction]:
         INSÉREZ VOTRE SOLUTION À LA QUESTION 3 ICI
     '''
 
-    util.raiseNotDefined()
+    actuels = (problem.getStartState(), [])
+    fermes = []
+    fringe = util.PriorityQueue() #choix de l'élément de la file d'attente ayant la plus basse priorité
+    fringe.push(actuels, 0)       #actualisation de la fringe
+    comptages = util.Counter()    #comptage des éléments sans reinitialiser leurs décomptes
+    
+    
+    while fringe.isEmpty() is False:
+        noeud, chemin = fringe.pop()
+        if problem.isGoalState(noeud):
+            return chemin
+        if noeud not in fermes:
+            fermes.append(noeud)
+            for coord, mouvement, cout in problem.getSuccessors(noeud):
+                comptages[coord] = comptages[noeud] + cout
+                fringe.push((coord, chemin + [mouvement]), comptages[coord]) 
 
 def nullHeuristic(state:GameState, problem:SearchProblem=None)->List[Direction]:
     """
@@ -136,7 +179,23 @@ def aStarSearch(problem:SearchProblem, heuristic=nullHeuristic)->List[Direction]
         INSÉREZ VOTRE SOLUTION À LA QUESTION 4 ICI
     '''
 
-    util.raiseNotDefined()
+    actuels = (problem.getStartState(), [])  
+    fermes = []
+    fringe = util.PriorityQueue() #choix de l'élément de la file d'attente ayant la plus basse priorité
+    comptages = util.Counter()    #comptage des éléments sans reinitialiser leurs décomptes
+    comptages[str(actuels[0])] += heuristic(actuels[0], problem) #actualisation du comptage des éléments
+    fringe.push(actuels, comptages[str(actuels[0])])             #actualisation de la fringe
+    
+    while fringe.isEmpty() is False:
+        noeud, chemin = fringe.pop()
+        if problem.isGoalState(noeud):
+            return chemin
+        if noeud not in fermes:
+            fermes.append(noeud)
+            for coord, mouvement, _ in problem.getSuccessors(noeud):
+                nouvchemin = chemin + [mouvement]
+                comptages[str(coord)] = problem.getCostOfActions(nouvchemin) + heuristic(coord, problem)
+                fringe.push((coord, nouvchemin), comptages[str(coord)]) 
 
 
 # Abbreviations
