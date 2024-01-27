@@ -95,45 +95,60 @@ def depthFirstSearch(problem:SearchProblem)->List[Direction]:
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-
-    '''
-        INSÉREZ VOTRE SOLUTION À LA QUESTION 1 ICI
-    '''
-    start = problem.getStartState()
     visited: List[Tuple] = []
     stack = util.Stack()
-    stack.push((start, [])) # [] is an array of actions from start to current_state
+    stack.push((problem.getStartState(), [])) # [] is an array of actions from start to current_state
+
     while not stack.isEmpty():
         current_state, actions = stack.pop()
-        if problem.isGoalState(current_state):
-            return actions
-        else:
+        if current_state not in visited:
             visited.append(current_state)
-            successors = problem.getSuccessors(current_state)
-            for successor in successors:
-                if successor[0] not in visited:
-                    stack.push((successor[0], actions + [successor[1]]))
+            if problem.isGoalState(current_state):
+                return actions
+            else:
+                successors = problem.getSuccessors(current_state)
+                for successor in successors:
+                    if successor[0] not in visited:
+                        stack.push((successor[0], actions + [successor[1]]))
     return []
 
 def breadthFirstSearch(problem:SearchProblem)->List[Direction]:
     """Search the shallowest nodes in the search tree first."""
+    visited: List[Tuple] = []
+    queue = util.Queue()
+    queue.push((problem.getStartState(), [])) # [] is an array of actions from start to current_state
 
-
-    '''
-        INSÉREZ VOTRE SOLUTION À LA QUESTION 2 ICI
-    '''
-
-    util.raiseNotDefined()
+    while not queue.isEmpty():
+        current_state, actions = queue.pop()
+        if current_state not in visited:
+            visited.append(current_state)
+            if problem.isGoalState(current_state):
+                return actions
+            else:
+                successors = problem.getSuccessors(current_state)
+                for successor in successors:
+                    if successor[0] not in visited:
+                        queue.push((successor[0], actions + [successor[1]]))
+    return []
 
 def uniformCostSearch(problem:SearchProblem)->List[Direction]:
     """Search the node of least total cost first."""
+    visited: List[Tuple] = []
+    queue = util.PriorityQueue()
+    queue.push((problem.getStartState(), []), 0) # [] is an array of actions from start to current_state
 
-
-    '''
-        INSÉREZ VOTRE SOLUTION À LA QUESTION 3 ICI
-    '''
-
-    util.raiseNotDefined()
+    while not queue.isEmpty():
+        current_state, actions = queue.pop()
+        if current_state not in visited:
+            visited.append(current_state)
+            if problem.isGoalState(current_state):
+                return actions
+            else:
+                successors = problem.getSuccessors(current_state)
+                for successor in successors:
+                    if successor[0] not in visited:
+                        queue.push((successor[0], actions + [successor[1]]), problem.getCostOfActions(actions + [successor[1]]))
+    return []
 
 def nullHeuristic(state:GameState, problem:SearchProblem=None)->List[Direction]:
     """
