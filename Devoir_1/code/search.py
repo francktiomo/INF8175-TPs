@@ -96,11 +96,11 @@ def depthFirstSearch(problem:SearchProblem)->List[Direction]:
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     visited: List[Tuple] = []
-    stack = util.Stack()
-    stack.push((problem.getStartState(), [])) # [] is an array of actions from start to current_state
+    fringe = util.Stack()
+    fringe.push((problem.getStartState(), [])) # [] is an array of actions from start to current_state
 
-    while not stack.isEmpty():
-        current_state, actions = stack.pop()
+    while not fringe.isEmpty():
+        current_state, actions = fringe.pop()
         if current_state not in visited:
             visited.append(current_state)
             if problem.isGoalState(current_state):
@@ -109,17 +109,17 @@ def depthFirstSearch(problem:SearchProblem)->List[Direction]:
                 successors = problem.getSuccessors(current_state)
                 for successor in successors:
                     if successor[0] not in visited:
-                        stack.push((successor[0], actions + [successor[1]]))
+                        fringe.push((successor[0], actions + [successor[1]]))
     return []
 
 def breadthFirstSearch(problem:SearchProblem)->List[Direction]:
     """Search the shallowest nodes in the search tree first."""
     visited: List[Tuple] = []
-    queue = util.Queue()
-    queue.push((problem.getStartState(), [])) # [] is an array of actions from start to current_state
+    fringe = util.Queue()
+    fringe.push((problem.getStartState(), [])) # [] is an array of actions from start to current_state
 
-    while not queue.isEmpty():
-        current_state, actions = queue.pop()
+    while not fringe.isEmpty():
+        current_state, actions = fringe.pop()
         if current_state not in visited:
             visited.append(current_state)
             if problem.isGoalState(current_state):
@@ -128,17 +128,17 @@ def breadthFirstSearch(problem:SearchProblem)->List[Direction]:
                 successors = problem.getSuccessors(current_state)
                 for successor in successors:
                     if successor[0] not in visited:
-                        queue.push((successor[0], actions + [successor[1]]))
+                        fringe.push((successor[0], actions + [successor[1]]))
     return []
 
 def uniformCostSearch(problem:SearchProblem)->List[Direction]:
     """Search the node of least total cost first."""
     visited: List[Tuple] = []
-    queue = util.PriorityQueue()
-    queue.push((problem.getStartState(), []), 0) # [] is an array of actions from start to current_state
+    fringe = util.PriorityQueue()
+    fringe.push((problem.getStartState(), []), 0) # [] is an array of actions from start to current_state
 
-    while not queue.isEmpty():
-        current_state, actions = queue.pop()
+    while not fringe.isEmpty():
+        current_state, actions = fringe.pop()
         if current_state not in visited:
             visited.append(current_state)
             if problem.isGoalState(current_state):
@@ -147,7 +147,7 @@ def uniformCostSearch(problem:SearchProblem)->List[Direction]:
                 successors = problem.getSuccessors(current_state)
                 for successor in successors:
                     if successor[0] not in visited:
-                        queue.push((successor[0], actions + [successor[1]]), problem.getCostOfActions(actions + [successor[1]]))
+                        fringe.push((successor[0], actions + [successor[1]]), problem.getCostOfActions(actions + [successor[1]]))
     return []
 
 def nullHeuristic(state:GameState, problem:SearchProblem=None)->List[Direction]:
