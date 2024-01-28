@@ -162,9 +162,27 @@ def aStarSearch(problem:SearchProblem, heuristic=nullHeuristic)->List[Direction]
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 4 ICI
     '''
+    visited: List[Tuple] = []
+    fringe = util.PriorityQueue()
+    fringe.push((problem.getStartState(), []), 0)
 
-    util.raiseNotDefined()
-
+    while not fringe.isEmpty():
+        current_state, actions = fringe.pop()
+        if current_state not in visited:
+            visited.append(current_state)
+            if problem.isGoalState(current_state):
+                return actions
+            else:
+                successors = problem.getSuccessors(current_state)
+                for successor in successors:
+                    if successor[0] not in visited:
+                        fringe.push(
+                            (successor[0], actions + [successor[1]]),
+                            problem.getCostOfActions(
+                                actions + [successor[1]]) + heuristic(successor[0],
+                                problem
+                            )
+                        )
 
 # Abbreviations
 bfs = breadthFirstSearch
