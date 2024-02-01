@@ -404,7 +404,18 @@ def cornersHeuristic(state, problem):
         INSÉREZ VOTRE SOLUTION À LA QUESTION 6 ICI
     '''
     
-    return 0
+    CoinsVisites = state[1]
+    CoinsNonVisites = tuple(set(corners).difference(CoinsVisites))
+    distances = []
+    
+    for coin in CoinsNonVisites:
+        RechercheChemin = PositionSearchProblem(problem.startingState, start=state[0], goal=coin, warn=False)
+        distance = len(search.bfs(RechercheChemin)) # utilisation du bfs pour résoudre la recherche du chemin
+        distances.append(distance)
+    if distances:
+        return max(distances)
+    else:
+        return 0
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
@@ -501,7 +512,19 @@ def foodHeuristic(state, problem: FoodSearchProblem):
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 7 ICI
     '''
+    distances = [] 
+     
+    for coord in foodGrid.asList():
+        if (position, coord) in problem.heuristicInfo:
+            distances.append(problem.heuristicInfo[(position, coord)])
+        else:
+            RechercheChemin = PositionSearchProblem(problem.startingGameState, start=position, goal=coord, warn=False)
+            distance = len(search.bfs(RechercheChemin)) # utilisation du bfs pour résoudre la recherche du chemin
+            problem.heuristicInfo[(position, coord)] = distance
+            distances.append(distance)
 
+    if not distances:
+        return 0
+    return max(distances)
 
-    return 0
 
