@@ -390,7 +390,44 @@ def cornersHeuristic(state, problem):
         INSÉREZ VOTRE SOLUTION À LA QUESTION 6 ICI
     '''
     
-    return 0
+    if len(state[1]) == 0:
+        return 0
+    
+    pacmanPos = state[0]
+    unvisitedCorners = state[1]
+
+    # Manhattan distance between the current position and each corner
+    distances_to_corners = []
+
+    heuristic = 0
+
+    for corner in unvisitedCorners:
+        distances_to_corners.append((util.manhattanDistance(pacmanPos, corner), corner))
+    
+    distances_to_corners.sort()
+
+    # Add distance between the current position and closest corner to heuristic
+    heuristic += distances_to_corners[0][0]
+
+    closest_corner = distances_to_corners[0][1]
+
+    # Remove closest corner from unvisited corners
+    unvisitedCorners = [corner for corner in unvisitedCorners if corner != closest_corner]
+    unvisitedCorners = tuple(unvisitedCorners)
+
+    if len(unvisitedCorners) == 0:
+        return heuristic
+    
+    distances_to_corners = []
+    for corner in unvisitedCorners:
+        distances_to_corners.append((util.manhattanDistance(closest_corner, corner), corner))
+
+    distances_to_corners.sort(reverse=True)
+
+    # Add distance between the closest corner and corner farthest to it to heuristic
+    heuristic += distances_to_corners[0][0]
+
+    return heuristic
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
@@ -487,7 +524,43 @@ def foodHeuristic(state, problem: FoodSearchProblem):
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 7 ICI
     '''
+    
+    pacmanPos = state[0]
+    unvisitedCorners = foodGrid.asList()
 
+    if len(unvisitedCorners) == 0:
+        return 0
 
-    return 0
+    # Manhattan distance between the current position and each corner
+    distances_to_corners = []
+
+    heuristic = 0
+
+    for corner in unvisitedCorners:
+        distances_to_corners.append((util.manhattanDistance(pacmanPos, corner), corner))
+    
+    distances_to_corners.sort()
+
+    # Add distance between the current position and closest corner to heuristic
+    heuristic += distances_to_corners[0][0]
+
+    closest_corner = distances_to_corners[0][1]
+
+    # Remove closest corner from unvisited corners
+    unvisitedCorners = [corner for corner in unvisitedCorners if corner != closest_corner]
+    unvisitedCorners = tuple(unvisitedCorners)
+
+    if len(unvisitedCorners) == 0:
+        return heuristic
+    
+    distances_to_corners = []
+    for corner in unvisitedCorners:
+        distances_to_corners.append((util.manhattanDistance(closest_corner, corner), corner))
+
+    distances_to_corners.sort(reverse=True)
+
+    # Add distance between the closest corner and corner farthest to it to heuristic
+    heuristic += distances_to_corners[0][0]
+
+    return heuristic
 
