@@ -146,6 +146,9 @@ class Stack:
     def isEmpty(self):
         "Returns true if the stack is empty"
         return len(self.list) == 0
+    
+    def to_str(self):
+        return self.list
 
 class Queue:
     "A container with a first-in-first-out (FIFO) queuing policy."
@@ -189,6 +192,10 @@ class PriorityQueue:
 
     def isEmpty(self):
         return len(self.heap) == 0
+    
+    def to_str(self):
+        lst = [item for _, _, item in self.heap]
+        return lst
 
     def update(self, item, priority):
         # If item already in priority queue with higher priority, update its priority and rebuild the heap.
