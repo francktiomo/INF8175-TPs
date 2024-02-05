@@ -1,3 +1,6 @@
+# Auteurs: Shimbi Masengo Wa Umba Papa Levi (2119138) - Einstein Franck Tiomo Epongo (2093771)
+
+
 # searchAgents.py
 # ---------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -521,48 +524,9 @@ def foodHeuristic(state, problem: FoodSearchProblem):
     """
     position, foodGrid = state
 
-    # '''
-    #     INSÉREZ VOTRE SOLUTION À LA QUESTION 7 ICI
-    # '''
-    
-    # pacmanPos = state[0]
-    # unvisitedCorners = foodGrid.asList()
-
-    # if len(unvisitedCorners) == 0:
-    #     return 0
-
-    # # Manhattan distance between the current position and each corner
-    # distances_to_corners = []
-
-    # heuristic = 0
-
-    # for corner in unvisitedCorners:
-    #     distances_to_corners.append((util.manhattanDistance(pacmanPos, corner), corner))
-    
-    # distances_to_corners.sort()
-
-    # # Add distance between the current position and closest corner to heuristic
-    # heuristic += distances_to_corners[0][0]
-
-    # closest_corner = distances_to_corners[0][1]
-
-    # # Remove closest corner from unvisited corners
-    # unvisitedCorners = [corner for corner in unvisitedCorners if corner != closest_corner]
-    # unvisitedCorners = tuple(unvisitedCorners)
-
-    # if len(unvisitedCorners) == 0:
-    #     return heuristic
-    
-    # distances_to_corners = []
-    # for corner in unvisitedCorners:
-    #     distances_to_corners.append((util.manhattanDistance(closest_corner, corner), corner))
-
-    # distances_to_corners.sort(reverse=True)
-
-    # # Add distance between the closest corner and corner farthest to it to heuristic
-    # heuristic += distances_to_corners[0][0]
-
-    # return heuristic
+    '''
+        INSÉREZ VOTRE SOLUTION À LA QUESTION 7 ICI
+    '''
 
     distances = [] 
      

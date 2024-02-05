@@ -1,3 +1,6 @@
+# Auteurs: Shimbi Masengo Wa Umba Papa Levi (2119138) - Einstein Franck Tiomo Epongo (2093771)
+
+
 # search.py
 # ---------
 # Licensing Information:  You are free to use or extend these projects for
@@ -159,9 +162,6 @@ def nullHeuristic(state:GameState, problem:SearchProblem=None)->List[Direction]:
 
 def aStarSearch(problem:SearchProblem, heuristic=nullHeuristic)->List[Direction]:
     """Search the node that has the lowest combined cost and heuristic first."""
-    '''
-        INSÉREZ VOTRE SOLUTION À LA QUESTION 4 ICI
-    '''
     visited: List[Tuple] = []
     fringe = util.PriorityQueue()
     fringe.push((problem.getStartState(), []), 0)
