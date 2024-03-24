@@ -2,8 +2,8 @@ from uflp import UFLP
 import random
 from typing import List, Tuple
 """ 
-    Binome 1 : Nom Prenom (Matricule)
-    Binome 2 : Nom Prenom (Matricule)
+    Binome 1 : Shimbi Masengo Wa Umba Papa Levi (2119138)
+    Binome 2 : Tiomo EPongo Einstein Franck (2093771)
     Description succinte de l'implementation :
 
     L'implémentation de recherche locale que nous avons réalisée se base sur la métaheuristique des restarts.
