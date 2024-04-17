@@ -1,5 +1,5 @@
-% NOM_ETUDIANT_1 (MATRICULE_1)
-% NOM_ETUDIANT_2 (MATRICULE_2)
+% Shimbi (2119138)
+% Tiomo  (2093771)
 
 include "globals.mzn";
 
@@ -22,7 +22,12 @@ var int: longueur;
 % Partie étudiant
 %-----------------------------------------------------------------------------%
 
+% Contrainte globale pour s'assurer que toutes les distances sont uniques
+constraint alldifferent(distances);
+longueur = max(frequences);
 
+% Minimiser la longueur
+solve minimize longueur;
 
 %-----------------------------------------------------------------------------%
 
