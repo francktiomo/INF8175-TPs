@@ -202,24 +202,17 @@ class DigitClassificationModel(object):
         while True:
             acceptable_loss = True
             for x, y in dataset.iterate_once(self.batch_size):
-
                 loss = self.get_loss(x, y)
-                
                 if nn.as_scalar(loss) > 0.02:
                     acceptable_loss = False
                     grad_w_0, grad_b_0, grad_w_1, grad_b_1, grad_w_2, grad_b_2 = nn.gradients(loss, [self.w[0], self.b[0], self.w[1], self.b[1], self.w[2], self.b[2]])
-
                     self.w[0].update(grad_w_0, -self.learning_rate)
                     self.b[0].update(grad_b_0, -self.learning_rate)
-
                     self.w[1].update(grad_w_1, -self.learning_rate)
                     self.b[1].update(grad_b_1, -self.learning_rate)
-
                     self.w[2].update(grad_w_2, -self.learning_rate)
                     self.b[2].update(grad_b_2, -self.learning_rate)
-
                     loss = self.get_loss(x, y)
-
             if acceptable_loss or dataset.get_validation_accuracy() >= self.validation_treshhold:
                 break
     
